@@ -32,7 +32,7 @@ export class CoursesDBService {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.data());
-      allCourse.push({number:doc.data().number,title:doc.data().title})
+      allCourse.push({Id:doc.id,number:doc.data().number,title:doc.data().title})
       // console.log(doc.id, ' => ', doc.data())
     })
     return allCourse
