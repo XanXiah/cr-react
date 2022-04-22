@@ -5,7 +5,7 @@ import { Course } from "./Interface/course.interface";
 import CourseItem from './components/CourseItem';
 import CourseForm from './components/CourseForm';
 import { getFirestore, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore/lite';
-
+import CourseServices, { fetchCourse } from './services/CourseServices';
 
 const App = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -16,13 +16,14 @@ const App = () => {
     setformVisible(!formVisible);
   }
   
+  const fetchCourse = () => {
+    CourseServices.fetchCourse()
+    .then(courses => {
+      setCourses(courses);
+    })
+  }
   useEffect(() => {
-    fetch("http://localhost:3000/db/")
-      .then(x => x.json())
-      .then(courses => {
-        setCourses(courses);
-      })
-      ;
+    fetchCourse();
   }, []);
   return (
     <div className="App">

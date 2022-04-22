@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import {
-  collection,
-  doc,
-  setDoc,
-  serverTimestamp,
-  addDoc,
-  updateDoc,
-} from 'firebase/firestore'
-import { firestore } from "../../../cr-backend/src/utils/firebase"
+import CourseServices from '../services/CourseServices';
+
 type CourseFormProps = {
 
 };
@@ -27,15 +20,9 @@ const CourseForm = (props: CourseFormProps) => {
       title: newTitle,
     };
     
-    fetch('http://localhost:3000/db/', {
-      method: 'POST',
-      headers: {'Content-Type' : 'application/json'},
-      body: JSON.stringify(newCourse)
-    })
-    .then(res => console.log(res))
-    .then(res => {alert(res);});
-  };
-
+  CourseServices.createCourse(newCourse)
+  .then(course => {alert("Save");});
+  }
   return (
     <div>
       Number:<input value={newNumber} onChange={handleNumber} /><br />
@@ -44,4 +31,4 @@ const CourseForm = (props: CourseFormProps) => {
     </div>)
 };
 
-export default CourseForm;
+export default CourseForm; 
